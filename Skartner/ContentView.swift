@@ -24,6 +24,17 @@ struct ContentView: View {
                            print("Failure! Error: \(error)")
                        }
                    }
+                
+                
+                Network.shared.apollo.fetch(query: SendSinglePromptQuery(input: "list meaning and 3 easy example sentences for word - cool", skipCache: true, indexesReturned: [], resultIndexFromCache: 0)) { result in
+                       switch result {
+                       case .success(let graphQLResult):
+                           print("Success! Result: \(graphQLResult)")
+                           print("Result: \(graphQLResult.data?.sendSinglePrompt.result ?? "hii")")
+                       case .failure(let error):
+                           print("Failure! Error: \(error)")
+                       }
+                   }
             }
         }
         .padding()

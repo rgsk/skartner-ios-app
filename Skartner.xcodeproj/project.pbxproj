@@ -14,6 +14,7 @@
 		D54751452A82BD5C00309CAF /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = D54751442A82BD5C00309CAF /* Apollo */; };
 		D547514E2A82C02200309CAF /* SkartnerAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D547514D2A82C02200309CAF /* SkartnerAPI */; };
 		D54751502A82C05D00309CAF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547514F2A82C05D00309CAF /* Network.swift */; };
+		D54751542A82C7B100309CAF /* GrePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54751532A82C7B100309CAF /* GrePageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		D54751492A82BFD400309CAF /* Hello.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Hello.graphql; sourceTree = "<group>"; };
 		D547514B2A82C00A00309CAF /* SkartnerAPI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SkartnerAPI; sourceTree = "<group>"; };
 		D547514F2A82C05D00309CAF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		D54751532A82C7B100309CAF /* GrePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrePageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				D547513A2A82BD3800309CAF /* Skartner.entitlements */,
 				D547513B2A82BD3800309CAF /* Preview Content */,
 				D547514F2A82C05D00309CAF /* Network.swift */,
+				D54751532A82C7B100309CAF /* GrePageView.swift */,
 			);
 			path = Skartner;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 			files = (
 				D54751372A82BD3700309CAF /* ContentView.swift in Sources */,
 				D54751352A82BD3700309CAF /* SkartnerApp.swift in Sources */,
+				D54751542A82C7B100309CAF /* GrePageView.swift in Sources */,
 				D54751502A82C05D00309CAF /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
