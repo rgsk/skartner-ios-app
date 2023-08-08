@@ -1,0 +1,115 @@
+fragment GreWordFields on GreWord {
+  id
+  spelling
+  status
+  gptPrompts {
+    id
+    input
+    response
+    editedResponse
+    greWordId
+  }
+  greWordTags {
+    id
+    name
+  }
+}
+query greWords(
+  $where: GreWordWhereInput
+  $skip: Int
+  $take: Int
+  $orderBy: [GreWordOrderByWithRelationInput]
+) {
+  greWords(where: $where, skip: $skip, take: $take, orderBy: $orderBy) {
+    ...GreWordFields
+  }
+  greWordsCount(where: $where)
+}
+
+query StatusWiseGreWordCount(
+  $userId: String!
+  $greWordTags: GreWordTagListRelationFilter
+) {
+  STARTED_LEARNING: greWordsCount(
+    where: {
+      status: { equals: STARTED_LEARNING }
+      userId: { equals: $userId }
+      greWordTags: $greWordTags
+    }
+  )
+  STILL_LEARNING: greWordsCount(
+    where: {
+      status: { equals: STILL_LEARNING }
+      userId: { equals: $userId }
+      greWordTags: $greWordTags
+    }
+  )
+  ALMOST_LEARNT: greWordsCount(
+    where: {
+      status: { equals: ALMOST_LEARNT }
+      userId: { equals: $userId }
+      greWordTags: $greWordTags
+    }
+  )
+  FINISHED_LEARNING: greWordsCount(
+    where: {
+      status: { equals: FINISHED_LEARNING }
+      userId: { equals: $userId }
+      greWordTags: $greWordTags
+    }
+  )
+  MEMORY_MODE: greWordsCount(
+    where: {
+      status: { equals: MEMORY_MODE }
+      userId: { equals: $userId }
+      greWordTags: $greWordTags
+    }
+  )
+  MASTERED: greWordsCount(
+    where: {
+      status: { equals: MASTERED }
+      userId: { equals: $userId }
+      greWordTags: $greWordTags
+    }
+  )
+}
+
+mutation DeleteGreWord($deleteGreWordId: String!) {
+  deleteGreWord(id: $deleteGreWordId) {
+    id
+  }
+}
+
+mutation DeleteGptPrompt($deleteGptPromptId: String!) {
+  deleteGptPrompt(id: $deleteGptPromptId) {
+    id
+  }
+}
+
+mutation UpdateGptPrompt($id: String!, $editedResponse: String) {
+  updateGptPrompt(id: $id, editedResponse: $editedResponse) {
+    id
+    editedResponse
+  }
+}
+
+query greWordTags($where: GreWordTagWhereInput) {
+  greWordTags(where: $where) {
+    id
+    name
+  }
+}
+
+mutation updateGreWord(
+  $updateGreWordId: String!
+  $greWordTags: [GreWordTagWhereUniqueInput]
+  $status: GreWordStatus
+) {
+  updateGreWord(
+    id: $updateGreWordId
+    greWordTags: $greWordTags
+    status: $status
+  ) {
+    id
+  }
+}

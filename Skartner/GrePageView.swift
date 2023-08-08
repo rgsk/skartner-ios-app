@@ -17,24 +17,31 @@ struct GrePageView: View {
         VStack {
             Spacer()
             
-            HStack {
-                TextField("Word", text: $viewModel.wordInput)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                
+            VStack {
+                HStack {
+                    TextField("Word", text: $viewModel.wordInput)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    Button(action: {
+                        viewModel.sendSinglePrompt()
+                    }) {
+                        Image(systemName: "paperplane.fill")
+                            .font(.title)
+                            .foregroundColor(.blue)
+                    }
+                }
                 Button(action: {
-                    viewModel.sendSinglePrompt()
+                    viewModel.createGreWord()
                 }) {
-                    Image(systemName: "paperplane.fill")
-                        .font(.title)
-                        .foregroundColor(.blue)
+                   Text("Save")
                 }
             }
             .padding()
             
             Spacer()
-            if viewModel.sendSinglePromptResult.isLoading {
+            if viewModel.sendSinglePromptQueryResult.isLoading {
                 Text("Loading...")
-            } else if let data = viewModel.sendSinglePromptResult.data {
+            } else if let data = viewModel.sendSinglePromptQueryResult.data {
                 Text(data.sendSinglePrompt.result ?? " ")
             }
             

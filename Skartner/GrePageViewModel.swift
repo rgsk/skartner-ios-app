@@ -9,85 +9,45 @@ import Foundation
 import SkartnerAPI
 import SwiftUI
 import Apollo
-import Combine  
+import Combine
+
+let userId = "b2b5c36e-ad55-45d3-ad6e-51b695911acb"
 
 class GrePageViewModel: ObservableObject {
     @Published var wordInput: String = ""
-    @Published var sendSinglePromptResult = ApolloQuery<SendSinglePromptQuery>()
+    @Published var sendSinglePromptQueryResult = ApolloQuery<SendSinglePromptQuery>()
+    @Published var createGreWordMutationResult = ApolloMutation<CreateGreWordMutation>()
     private var subscriptionManager = ObservableObjectSubscriptionManager()
     
+    func refresh() {
+        self.objectWillChange.send()
+    }
+    
     init() {
-        self.subscriptionManager.subscribeToChildObservable(self.sendSinglePromptResult) {
-            self.objectWillChange.send()
-        }
+        self.subscriptionManager.subscribeToChildObservable(self.sendSinglePromptQueryResult, refresh)
+        self.subscriptionManager.subscribeToChildObservable(self.createGreWordMutationResult, refresh)
+    }
+    
+    func getPrompt () -> String {
+        return "list meaning and 3 easy example sentences for word - \(wordInput)"
     }
     
     func sendSinglePrompt() {
         let query = SendSinglePromptQuery(
-            input: "list meaning and 3 easy example sentences for word - \(wordInput)",
+            input: getPrompt(),
             skipCache: true,
             indexesReturned: [],
             resultIndexFromCache: 0
         )
         
-        self.sendSinglePromptResult.execute(query)
+        self.sendSinglePromptQueryResult.execute(query)
     }
     
-    
-}
-
-class ObservableObjectSubscriptionManager: ObservableObject {
-    private var cancellables: [AnyCancellable] = []
-    
-    
-    func subscribeToChildObservable<ChildType: ObservableObject>(_ child: ChildType, _ fn: @escaping () -> Void) {
-        let propertyPublisher = child
-            .objectWillChange
-            .map { _ in () }
-            .eraseToAnyPublisher()
-        
-        cancellables.append(
-            propertyPublisher.sink { _ in
-                fn()
-            }
-        )
-    }
-    
-    deinit {
-        for cancellable in cancellables {
-            cancellable.cancel()
+    func createGreWord() {
+        if let promptResponse = sendSinglePromptQueryResult.data?.sendSinglePrompt.result {
+            let mutation = CreateGreWordMutation(spelling: wordInput, promptInput: getPrompt(), promptResponse: promptResponse, userId: userId, greWordTags: [])
+            self.createGreWordMutationResult.perform(mutation)
         }
-    }
-}
-
-
-
-
-class ApolloQuery<T: GraphQLQuery>: ObservableObject {
-    @Published var data: T.Data?
-    @Published var error: Error?
-    @Published var isLoading: Bool = false
-    
-    private var cancellable: Apollo.Cancellable?
-    
-    func execute(client: ApolloClient = Network.shared.apollo, _ query: T) {
-        isLoading = true
-        cancellable?.cancel()
         
-        cancellable = client.fetch(query: query) { [weak self] result in
-            switch result {
-            case .success(let graphQLResult):
-                self?.data = graphQLResult.data
-                self?.error = nil
-            case .failure(let apolloError):
-                self?.data = nil
-                self?.error = apolloError
-            }
-            self?.isLoading = false
-        }
-    }
-    
-    deinit {
-        cancellable?.cancel()
     }
 }

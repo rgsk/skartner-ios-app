@@ -17,6 +17,8 @@
 		D54751542A82C7B100309CAF /* GrePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54751532A82C7B100309CAF /* GrePageView.swift */; };
 		D54751582A82CE2600309CAF /* GrePage.gql in Resources */ = {isa = PBXBuildFile; fileRef = D54751572A82CE2600309CAF /* GrePage.gql */; };
 		D547515A2A82D2FA00309CAF /* GrePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54751592A82D2FA00309CAF /* GrePageViewModel.swift */; };
+		D547515C2A82EF3000309CAF /* GreHistoryPage.gql in Resources */ = {isa = PBXBuildFile; fileRef = D547515B2A82EF3000309CAF /* GreHistoryPage.gql */; };
+		D547515E2A82EF5600309CAF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547515D2A82EF5600309CAF /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		D54751532A82C7B100309CAF /* GrePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrePageView.swift; sourceTree = "<group>"; };
 		D54751572A82CE2600309CAF /* GrePage.gql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GrePage.gql; sourceTree = "<group>"; };
 		D54751592A82D2FA00309CAF /* GrePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrePageViewModel.swift; sourceTree = "<group>"; };
+		D547515B2A82EF3000309CAF /* GreHistoryPage.gql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GreHistoryPage.gql; sourceTree = "<group>"; };
+		D547515D2A82EF5600309CAF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,7 @@
 				D547514F2A82C05D00309CAF /* Network.swift */,
 				D54751532A82C7B100309CAF /* GrePageView.swift */,
 				D54751592A82D2FA00309CAF /* GrePageViewModel.swift */,
+				D547515D2A82EF5600309CAF /* Utils.swift */,
 			);
 			path = Skartner;
 			sourceTree = "<group>";
@@ -96,6 +101,7 @@
 				D54751472A82BF9000309CAF /* schema.graphqls */,
 				D54751492A82BFD400309CAF /* Hello.graphql */,
 				D54751572A82CE2600309CAF /* GrePage.gql */,
+				D547515B2A82EF3000309CAF /* GreHistoryPage.gql */,
 			);
 			path = graphql;
 			sourceTree = "<group>";
@@ -181,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D54751582A82CE2600309CAF /* GrePage.gql in Resources */,
+				D547515C2A82EF3000309CAF /* GreHistoryPage.gql in Resources */,
 				D547513D2A82BD3800309CAF /* Preview Assets.xcassets in Resources */,
 				D54751392A82BD3800309CAF /* Assets.xcassets in Resources */,
 			);
@@ -198,6 +205,7 @@
 				D54751542A82C7B100309CAF /* GrePageView.swift in Sources */,
 				D54751502A82C05D00309CAF /* Network.swift in Sources */,
 				D547515A2A82D2FA00309CAF /* GrePageViewModel.swift in Sources */,
+				D547515E2A82EF5600309CAF /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

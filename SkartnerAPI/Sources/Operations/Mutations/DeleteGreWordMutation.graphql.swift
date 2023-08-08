@@ -1,0 +1,48 @@
+// @generated
+// This file was automatically generated and should not be edited.
+
+@_exported import ApolloAPI
+
+public class DeleteGreWordMutation: GraphQLMutation {
+  public static let operationName: String = "DeleteGreWord"
+  public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    definition: .init(
+      #"mutation DeleteGreWord($deleteGreWordId: String!) { deleteGreWord(id: $deleteGreWordId) { __typename id } }"#
+    ))
+
+  public var deleteGreWordId: String
+
+  public init(deleteGreWordId: String) {
+    self.deleteGreWordId = deleteGreWordId
+  }
+
+  public var __variables: Variables? { ["deleteGreWordId": deleteGreWordId] }
+
+  public struct Data: SkartnerAPI.SelectionSet {
+    public let __data: DataDict
+    public init(_dataDict: DataDict) { __data = _dataDict }
+
+    public static var __parentType: ApolloAPI.ParentType { SkartnerAPI.Objects.Mutation }
+    public static var __selections: [ApolloAPI.Selection] { [
+      .field("deleteGreWord", DeleteGreWord?.self, arguments: ["id": .variable("deleteGreWordId")]),
+    ] }
+
+    public var deleteGreWord: DeleteGreWord? { __data["deleteGreWord"] }
+
+    /// DeleteGreWord
+    ///
+    /// Parent Type: `GreWord`
+    public struct DeleteGreWord: SkartnerAPI.SelectionSet {
+      public let __data: DataDict
+      public init(_dataDict: DataDict) { __data = _dataDict }
+
+      public static var __parentType: ApolloAPI.ParentType { SkartnerAPI.Objects.GreWord }
+      public static var __selections: [ApolloAPI.Selection] { [
+        .field("__typename", String.self),
+        .field("id", String.self),
+      ] }
+
+      public var id: String { __data["id"] }
+    }
+  }
+}

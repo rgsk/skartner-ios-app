@@ -24,7 +24,12 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     switch typename {
     case "Query": return SkartnerAPI.Objects.Query
     case "helloWorld": return SkartnerAPI.Objects.HelloWorld
+    case "GreWord": return SkartnerAPI.Objects.GreWord
+    case "GptPrompt": return SkartnerAPI.Objects.GptPrompt
+    case "GreWordTag": return SkartnerAPI.Objects.GreWordTag
+    case "Mutation": return SkartnerAPI.Objects.Mutation
     case "SendSinglePromptResponse": return SkartnerAPI.Objects.SendSinglePromptResponse
+    case "GreConfiguration": return SkartnerAPI.Objects.GreConfiguration
     default: return nil
     }
   }

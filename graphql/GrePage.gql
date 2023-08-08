@@ -16,3 +16,52 @@ query sendSinglePrompt(
     totalResultsInCache
   }
 }
+
+mutation createGreWord(
+  $spelling: String!
+  $promptInput: String!
+  $promptResponse: String!
+  $userId: String!
+  $greWordTags: [GreWordTagWhereUniqueInput]
+) {
+  createGreWord(
+    spelling: $spelling
+    promptInput: $promptInput
+    promptResponse: $promptResponse
+    userId: $userId
+    greWordTags: $greWordTags
+  ) {
+    ...GreWordFields
+  }
+}
+
+query GreConfiguration {
+  greConfiguration {
+    defaultGreWordSearchPromptInputs
+  }
+}
+
+mutation CreateGreWordTag($name: String!, $userId: String!) {
+  createGreWordTag(name: $name, userId: $userId) {
+    id
+    name
+  }
+}
+
+mutation DeleteGreWordTag($name: String!) {
+  deleteGreWordTag(name: $name) {
+    id
+    name
+  }
+}
+
+mutation createGptPrompt(
+  $input: String!
+  $response: String!
+  $greWordId: String!
+) {
+  createGptPrompt(input: $input, response: $response, greWordId: $greWordId) {
+    id
+    response
+  }
+}
