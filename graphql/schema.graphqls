@@ -1,0 +1,289 @@
+"""
+A directive used by the Apollo iOS client to annotate operations or fragments that should be used exclusively for generating local cache mutations instead of as standard operations.
+"""
+directive @apollo_client_ios_localCacheMutation on QUERY | MUTATION | SUBSCRIPTION | FRAGMENT_DEFINITION
+
+type GptPrompt {
+  id: String!
+  input: String!
+  response: String!
+  editedResponse: String
+  greWord: GreWord
+  greWordId: String
+  user: User
+  userId: String
+  meta: Json!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type SendSinglePromptResponse {
+  result: String
+  resultIndex: Int
+  error: String
+  totalResultsInCache: Int!
+}
+
+enum GreWordStatus {
+  STARTED_LEARNING
+  STILL_LEARNING
+  ALMOST_LEARNT
+  FINISHED_LEARNING
+  MEMORY_MODE
+  MASTERED
+}
+
+type GreWord {
+  id: String!
+  spelling: String!
+  createdAt: String!
+  updatedAt: String!
+  gptPrompts: [GptPrompt!]!
+  user: User
+  userId: String
+  status: GreWordStatus!
+  meta: Json!
+  greWordTags: [GreWordTag!]
+}
+
+input EnumGreWordStatusFilter {
+  equals: GreWordStatus
+  in: [GreWordStatus!]
+  notIn: [GreWordStatus!]
+  not: GreWordStatus
+}
+
+input GreWordWhereInput {
+  id: StringFilter
+  spelling: StringFilter
+  userId: StringFilter
+  greWordTags: GreWordTagListRelationFilter
+  status: EnumGreWordStatusFilter
+  user: UserWhereInput
+}
+
+input GreWordWhereUniqueInput {
+  id: String
+  spelling_userId: GreWordSpellingUserIdCompoundUniqueInput
+}
+
+input GreWordTagListRelationFilter {
+  every: GreWordTagWhereInput
+  some: GreWordTagWhereInput
+  none: GreWordTagWhereInput
+}
+
+input GreWordOrderByWithRelationInput {
+  id: SortOrder
+  spelling: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+}
+
+input GreWordTagWhereUniqueInput {
+  id: String
+  name: String
+}
+
+type GreWordSearchPromptInput {
+  id: String!
+  text: String!
+  userId: String!
+  user: User!
+  createdAt: String!
+  updatedAt: String!
+  meta: Json!
+}
+
+type GreWordTag {
+  id: String!
+  name: String!
+  user: User!
+  userId: String!
+  greWords: [GreWord!]!
+  meta: Json!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input GreWordTagWhereInput {
+  id: StringFilter
+  name: StringFilter
+  userId: StringFilter
+}
+
+type Notification {
+  message: String!
+  userId: String!
+}
+
+type Post {
+  id: String!
+  title: String
+  body: String
+  isPublished: Boolean
+  createdAt: String!
+  updatedAt: String!
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+"""The `Json` scalar type represents JSON objects."""
+scalar Json
+
+enum SortOrder {
+  asc
+  desc
+}
+
+type UserMetaParsedJsonValue {
+  defaultGreWordSearchPromptInput: String
+  showDefaultGreWordSearchPromptInputs: Boolean
+}
+
+input UserMetaParsedJsonValueInput {
+  defaultGreWordSearchPromptInput: String
+  showDefaultGreWordSearchPromptInputs: Boolean
+}
+
+type User {
+  id: String!
+  email: String!
+  meta: UserMetaParsedJsonValue!
+  greWordSearchPromptInputs: [GreWordSearchPromptInput!]!
+  greWords: [GreWord!]!
+  gptPrompts: [GptPrompt!]!
+  greWordTags: [GreWordTag!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input UserWhereInput {
+  id: StringFilter
+  email: StringFilter
+}
+
+input UserOrderByWithRelationInput {
+  id: SortOrder
+  email: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+}
+
+input UserWhereUniqueInput {
+  id: String
+  email: String
+}
+
+type UserSessionMetaParsedJsonValue {
+  none: String
+}
+
+input UserSessionMetaParsedJsonValueInput {
+  none: String
+}
+
+type UserSession {
+  id: String!
+  userId: String!
+  user: User!
+  meta: UserSessionMetaParsedJsonValue!
+  startedAt: String!
+  endedAt: String
+  duration: Int
+}
+
+input UserSessionWhereInput {
+  id: StringFilter
+  userId: StringFilter
+  user: UserWhereInput
+}
+
+input UserSessionWhereUniqueInput {
+  id: String
+}
+
+input UserSessionOrderByWithRelationInput {
+  id: SortOrder
+  userId: SortOrder
+  startedAt: SortOrder
+  endedAt: SortOrder
+  duration: SortOrder
+  user: UserOrderByWithRelationInput
+}
+
+type helloWorld {
+  message: String!
+}
+
+type GreConfiguration {
+  defaultGreWordSearchPromptInputs: [String!]!
+}
+
+input GreWordSpellingUserIdCompoundUniqueInput {
+  spelling: String!
+  userId: String!
+}
+
+input GreWordSearchPromptInputWhereInput {
+  id: StringFilter
+  text: StringFilter
+  userId: StringFilter
+}
+
+type Query {
+  hello: helloWorld!
+  greConfiguration: GreConfiguration!
+  gptPrompts(skip: Int, take: Int): [GptPrompt]
+  sendSinglePrompt(input: String!, skipCache: Boolean, indexesReturned: [Int!], resultIndexFromCache: Int): SendSinglePromptResponse!
+  greWords(skip: Int, take: Int, where: GreWordWhereInput, orderBy: [GreWordOrderByWithRelationInput]): [GreWord!]!
+  greWord(where: GreWordWhereUniqueInput): GreWord
+  greWordsCount(where: GreWordWhereInput): Int!
+  greWordSearchPromptInputs(skip: Int, take: Int, where: GreWordSearchPromptInputWhereInput): [GreWordSearchPromptInput!]!
+  greWordTags(skip: Int, take: Int, where: GreWordTagWhereInput): [GreWordTag!]!
+  drafts: [Post]
+  posts: [Post]
+  allPosts(isPublished: Boolean!, token: String): [Post]
+  users(skip: Int, take: Int, where: UserWhereInput, orderBy: [UserOrderByWithRelationInput]): [User!]!
+  user(where: UserWhereUniqueInput!): User
+  usersCount(where: UserWhereInput): Int!
+  userSessions(skip: Int, take: Int, where: UserSessionWhereInput, orderBy: [UserSessionOrderByWithRelationInput]): [UserSession!]!
+  userSession(where: UserSessionWhereUniqueInput!): UserSession
+  userSessionsCount(where: UserSessionWhereInput): Int!
+}
+
+type Mutation {
+  deleteGptPrompt(id: String!): GptPrompt
+  createGptPrompt(input: String!, response: String!, greWordId: String!): GptPrompt!
+  updateGptPrompt(id: String!, editedResponse: String): GptPrompt
+  createGreWord(spelling: String!, promptInput: String!, promptResponse: String!, userId: String!, status: GreWordStatus, greWordTags: [GreWordTagWhereUniqueInput]): GreWord!
+  updateGreWord(id: String!, status: GreWordStatus, greWordTags: [GreWordTagWhereUniqueInput]): GreWord
+  deleteGreWord(id: String!): GreWord
+  createGreWordSearchPromptInput(text: String!, userId: String!): GreWordSearchPromptInput!
+  updateGreWordSearchPromptInput(text: String!, id: String!): GreWordSearchPromptInput
+  deleteGreWordSearchPromptInput(id: String!): GreWordSearchPromptInput
+  createGreWordTag(name: String!, userId: String!): GreWordTag!
+  deleteGreWordTag(name: String!): GreWordTag!
+  createNotification(userId: String!, message: String!): Notification!
+  createDraft(title: String!, body: String!): Post
+  publish(draftId: String!): Post
+  createUser(email: String!, meta: UserMetaParsedJsonValueInput): User
+  updateUser(id: String, email: String, meta: UserMetaParsedJsonValueInput): User
+}
+
+type Subscription {
+  notificationReceived(userId: String!): Notification
+  truths: Boolean
+}

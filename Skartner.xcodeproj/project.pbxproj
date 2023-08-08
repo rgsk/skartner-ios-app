@@ -11,6 +11,9 @@
 		D54751372A82BD3700309CAF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54751362A82BD3700309CAF /* ContentView.swift */; };
 		D54751392A82BD3800309CAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D54751382A82BD3800309CAF /* Assets.xcassets */; };
 		D547513D2A82BD3800309CAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D547513C2A82BD3800309CAF /* Preview Assets.xcassets */; };
+		D54751452A82BD5C00309CAF /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = D54751442A82BD5C00309CAF /* Apollo */; };
+		D547514E2A82C02200309CAF /* SkartnerAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D547514D2A82C02200309CAF /* SkartnerAPI */; };
+		D54751502A82C05D00309CAF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547514F2A82C05D00309CAF /* Network.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +23,10 @@
 		D54751382A82BD3800309CAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D547513A2A82BD3800309CAF /* Skartner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Skartner.entitlements; sourceTree = "<group>"; };
 		D547513C2A82BD3800309CAF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D54751472A82BF9000309CAF /* schema.graphqls */ = {isa = PBXFileReference; lastKnownFileType = text; path = schema.graphqls; sourceTree = "<group>"; };
+		D54751492A82BFD400309CAF /* Hello.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Hello.graphql; sourceTree = "<group>"; };
+		D547514B2A82C00A00309CAF /* SkartnerAPI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SkartnerAPI; sourceTree = "<group>"; };
+		D547514F2A82C05D00309CAF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +34,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54751452A82BD5C00309CAF /* Apollo in Frameworks */,
+				D547514E2A82C02200309CAF /* SkartnerAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,8 +45,11 @@
 		D54751282A82BD3700309CAF = {
 			isa = PBXGroup;
 			children = (
+				D547514A2A82C00A00309CAF /* Packages */,
+				D54751462A82BF9000309CAF /* graphql */,
 				D54751332A82BD3700309CAF /* Skartner */,
 				D54751322A82BD3700309CAF /* Products */,
+				D547514C2A82C02200309CAF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,6 +69,7 @@
 				D54751382A82BD3800309CAF /* Assets.xcassets */,
 				D547513A2A82BD3800309CAF /* Skartner.entitlements */,
 				D547513B2A82BD3800309CAF /* Preview Content */,
+				D547514F2A82C05D00309CAF /* Network.swift */,
 			);
 			path = Skartner;
 			sourceTree = "<group>";
@@ -67,6 +80,30 @@
 				D547513C2A82BD3800309CAF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D54751462A82BF9000309CAF /* graphql */ = {
+			isa = PBXGroup;
+			children = (
+				D54751472A82BF9000309CAF /* schema.graphqls */,
+				D54751492A82BFD400309CAF /* Hello.graphql */,
+			);
+			path = graphql;
+			sourceTree = "<group>";
+		};
+		D547514A2A82C00A00309CAF /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D547514B2A82C00A00309CAF /* SkartnerAPI */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		D547514C2A82C02200309CAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +122,10 @@
 			dependencies = (
 			);
 			name = Skartner;
+			packageProductDependencies = (
+				D54751442A82BD5C00309CAF /* Apollo */,
+				D547514D2A82C02200309CAF /* SkartnerAPI */,
+			);
 			productName = Skartner;
 			productReference = D54751312A82BD3700309CAF /* Skartner.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +154,9 @@
 				Base,
 			);
 			mainGroup = D54751282A82BD3700309CAF;
+			packageReferences = (
+				D54751432A82BD5C00309CAF /* XCRemoteSwiftPackageReference "apollo-ios" */,
+			);
 			productRefGroup = D54751322A82BD3700309CAF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -141,6 +185,7 @@
 			files = (
 				D54751372A82BD3700309CAF /* ContentView.swift in Sources */,
 				D54751352A82BD3700309CAF /* SkartnerApp.swift in Sources */,
+				D54751502A82C05D00309CAF /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +399,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D54751432A82BD5C00309CAF /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D54751442A82BD5C00309CAF /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D54751432A82BD5C00309CAF /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+		D547514D2A82C02200309CAF /* SkartnerAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SkartnerAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D54751292A82BD3700309CAF /* Project object */;
 }

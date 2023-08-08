@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SkartnerAPI
 
 struct ContentView: View {
     var body: some View {
@@ -13,7 +14,17 @@ struct ContentView: View {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("Hello, world!").onAppear {
+                Network.shared.apollo.fetch(query: HelloQuery()) { result in
+                       switch result {
+                       case .success(let graphQLResult):
+                           print("Success! Result: \(graphQLResult)")
+                           print("Result: \(graphQLResult.data?.hello.message ?? "hii")")
+                       case .failure(let error):
+                           print("Failure! Error: \(error)")
+                       }
+                   }
+            }
         }
         .padding()
     }
