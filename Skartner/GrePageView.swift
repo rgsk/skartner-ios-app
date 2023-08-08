@@ -10,9 +10,9 @@ import SkartnerAPI
 
 
 struct GrePageView: View {
-  
+    
     @StateObject var viewModel = GrePageViewModel()
-
+    
     var body: some View {
         VStack {
             Spacer()
@@ -32,7 +32,12 @@ struct GrePageView: View {
             .padding()
             
             Spacer()
-            Text(viewModel.sendSinglePromptResult ?? "hii")
+            if viewModel.sendSinglePromptResult.isLoading {
+                Text("Loading...")
+            } else if let data = viewModel.sendSinglePromptResult.data {
+                Text(viewModel.sendSinglePromptResult.data?.sendSinglePrompt.result ?? "hii")
+            }
+
         }
     }
 }
