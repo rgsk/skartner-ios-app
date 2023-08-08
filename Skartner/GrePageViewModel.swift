@@ -14,26 +14,12 @@ import Combine
 class GrePageViewModel: ObservableObject {
     @Published var wordInput: String = ""
     @Published var sendSinglePromptResult = ApolloQuery<SendSinglePromptQuery>()
-    var cancellables: [AnyCancellable] = []
+    private var subscriptionManager = ObservableObjectSubscriptionManager()
     
     init() {
-        
-        //            cancellables.append(
-        //                        self.sendSinglePromptResult.$data.sink { [weak self] _ in
-        //                            self?.objectWillChange.send()
-        //                        }
-        //                    )
-        
-        let propertyPublisher = sendSinglePromptResult
-            .objectWillChange
-            .map { _ in () }
-            .eraseToAnyPublisher()
-        
-        cancellables.append(
-            propertyPublisher.sink { [weak self] _ in
-                self?.objectWillChange.send()
-            }
-        )
+        self.subscriptionManager.subscribeToChildObservable(self.sendSinglePromptResult) {
+            self.objectWillChange.send()
+        }
     }
     
     func sendSinglePrompt() {
@@ -47,6 +33,25 @@ class GrePageViewModel: ObservableObject {
         self.sendSinglePromptResult.execute(query)
     }
     
+    
+}
+
+class ObservableObjectSubscriptionManager: ObservableObject {
+    private var cancellables: [AnyCancellable] = []
+    
+    
+    func subscribeToChildObservable<ChildType: ObservableObject>(_ child: ChildType, _ fn: @escaping () -> Void) {
+        let propertyPublisher = child
+            .objectWillChange
+            .map { _ in () }
+            .eraseToAnyPublisher()
+        
+        cancellables.append(
+            propertyPublisher.sink { _ in
+                fn()
+            }
+        )
+    }
     
     deinit {
         for cancellable in cancellables {
