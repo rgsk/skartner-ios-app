@@ -23,8 +23,8 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
   public static func objectType(forTypename typename: String) -> Object? {
     switch typename {
     case "Query": return SkartnerAPI.Objects.Query
-    case "SendSinglePromptResponse": return SkartnerAPI.Objects.SendSinglePromptResponse
     case "helloWorld": return SkartnerAPI.Objects.HelloWorld
+    case "SendSinglePromptResponse": return SkartnerAPI.Objects.SendSinglePromptResponse
     default: return nil
     }
   }

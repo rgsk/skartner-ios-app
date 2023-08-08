@@ -1,0 +1,1 @@
+nodemon -w graphql -e graphql,gql --exec ./apollo-ios-cli generate
