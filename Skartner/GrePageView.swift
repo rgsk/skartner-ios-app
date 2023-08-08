@@ -10,30 +10,19 @@ import SkartnerAPI
 
 
 struct GrePageView: View {
-    @State private var wordInput: String = ""
-    @State private var sendSinglePromptResult: String?
-    
+  
+    @StateObject var viewModel = GrePageViewModel()
+
     var body: some View {
         VStack {
             Spacer()
             
             HStack {
-                TextField("Word", text: $wordInput)
+                TextField("Word", text: $viewModel.wordInput)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                 Button(action: {
-                    Network.shared.apollo.fetch(query: SendSinglePromptQuery(
-                        input: "list meaning and 3 easy example sentences for word - \(wordInput)", skipCache: true,
-                        indexesReturned: [],
-                        resultIndexFromCache: 0
-                    )) { result in
-                        switch result {
-                        case .success(let graphQLResult):
-                            sendSinglePromptResult = graphQLResult.data?.sendSinglePrompt.result
-                        case .failure(let error):
-                            print("Failure! Error: \(error)")
-                        }
-                    }
+                    viewModel.sendSinglePrompt()
                 }) {
                     Image(systemName: "paperplane.fill")
                         .font(.title)
@@ -43,7 +32,7 @@ struct GrePageView: View {
             .padding()
             
             Spacer()
-            Text(sendSinglePromptResult ?? "hii")
+            Text(viewModel.sendSinglePromptResult ?? "hii")
         }
     }
 }
