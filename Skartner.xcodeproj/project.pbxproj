@@ -19,6 +19,8 @@
 		D547515A2A82D2FA00309CAF /* GrePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54751592A82D2FA00309CAF /* GrePageViewModel.swift */; };
 		D547515C2A82EF3000309CAF /* GreHistoryPage.gql in Resources */ = {isa = PBXBuildFile; fileRef = D547515B2A82EF3000309CAF /* GreHistoryPage.gql */; };
 		D547515E2A82EF5600309CAF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547515D2A82EF5600309CAF /* Utils.swift */; };
+		D54751602A82F55500309CAF /* GreHistoryPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547515F2A82F55500309CAF /* GreHistoryPageView.swift */; };
+		D54751622A82F56700309CAF /* GreHistoryPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54751612A82F56700309CAF /* GreHistoryPageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		D54751592A82D2FA00309CAF /* GrePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrePageViewModel.swift; sourceTree = "<group>"; };
 		D547515B2A82EF3000309CAF /* GreHistoryPage.gql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GreHistoryPage.gql; sourceTree = "<group>"; };
 		D547515D2A82EF5600309CAF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		D547515F2A82F55500309CAF /* GreHistoryPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreHistoryPageView.swift; sourceTree = "<group>"; };
+		D54751612A82F56700309CAF /* GreHistoryPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreHistoryPageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,8 @@
 				D547513A2A82BD3800309CAF /* Skartner.entitlements */,
 				D547513B2A82BD3800309CAF /* Preview Content */,
 				D547514F2A82C05D00309CAF /* Network.swift */,
+				D547515F2A82F55500309CAF /* GreHistoryPageView.swift */,
+				D54751612A82F56700309CAF /* GreHistoryPageViewModel.swift */,
 				D54751532A82C7B100309CAF /* GrePageView.swift */,
 				D54751592A82D2FA00309CAF /* GrePageViewModel.swift */,
 				D547515D2A82EF5600309CAF /* Utils.swift */,
@@ -200,6 +206,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54751602A82F55500309CAF /* GreHistoryPageView.swift in Sources */,
+				D54751622A82F56700309CAF /* GreHistoryPageViewModel.swift in Sources */,
 				D54751372A82BD3700309CAF /* ContentView.swift in Sources */,
 				D54751352A82BD3700309CAF /* SkartnerApp.swift in Sources */,
 				D54751542A82C7B100309CAF /* GrePageView.swift in Sources */,
