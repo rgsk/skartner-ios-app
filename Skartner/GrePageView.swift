@@ -37,7 +37,7 @@ struct GrePageView: View {
             } else if let data = viewModel.sendSinglePromptResult.data {
                 Text(viewModel.sendSinglePromptResult.data?.sendSinglePrompt.result ?? "hii")
             }
-
+            
         }
     }
 }

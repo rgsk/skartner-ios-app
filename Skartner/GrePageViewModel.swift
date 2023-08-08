@@ -10,49 +10,49 @@ import SkartnerAPI
 import SwiftUI
 import Apollo
 import Combine  
- 
+
 class GrePageViewModel: ObservableObject {
     @Published var wordInput: String = ""
     @Published var sendSinglePromptResult = ApolloQuery<SendSinglePromptQuery>()
     var cancellables: [AnyCancellable] = []
-
-        init() {
-            
-//            cancellables.append(
-//                        self.sendSinglePromptResult.$data.sink { [weak self] _ in
-//                            self?.objectWillChange.send()
-//                        }
-//                    )
-            
-            let propertyPublisher = sendSinglePromptResult
-                .objectWillChange
-                .map { _ in () }
-                .eraseToAnyPublisher()
-
-            cancellables.append(
-                propertyPublisher.sink { [weak self] _ in
-                    self?.objectWillChange.send()
-                } 
-            )
-        }
-
+    
+    init() {
+        
+        //            cancellables.append(
+        //                        self.sendSinglePromptResult.$data.sink { [weak self] _ in
+        //                            self?.objectWillChange.send()
+        //                        }
+        //                    )
+        
+        let propertyPublisher = sendSinglePromptResult
+            .objectWillChange
+            .map { _ in () }
+            .eraseToAnyPublisher()
+        
+        cancellables.append(
+            propertyPublisher.sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+        )
+    }
+    
     func sendSinglePrompt() {
         let query = SendSinglePromptQuery(
-                    input: "list meaning and 3 easy example sentences for word - \(wordInput)",
-                    skipCache: true,
-                    indexesReturned: [],
-                    resultIndexFromCache: 0
-                )
-                
-                self.sendSinglePromptResult.execute(query)
+            input: "list meaning and 3 easy example sentences for word - \(wordInput)",
+            skipCache: true,
+            indexesReturned: [],
+            resultIndexFromCache: 0
+        )
+        
+        self.sendSinglePromptResult.execute(query)
     }
     
     
     deinit {
-            for cancellable in cancellables {
-                cancellable.cancel()
-            }
+        for cancellable in cancellables {
+            cancellable.cancel()
         }
+    }
 }
 
 
@@ -64,7 +64,7 @@ class ApolloQuery<T: GraphQLQuery>: ObservableObject {
     @Published var isLoading: Bool = false
     
     private var cancellable: Apollo.Cancellable?
-
+    
     func execute(client: ApolloClient = Network.shared.apollo, _ query: T) {
         isLoading = true
         cancellable?.cancel()
