@@ -14,6 +14,7 @@ struct GptPromptView: View {
     @State var editModeActive = false
     @State var editedText = ""
     @State private var selectedTabIndex = 0
+    let onPromptUpdate: () -> Void
 
     var body: some View {
         if editModeActive {
@@ -21,10 +22,13 @@ struct GptPromptView: View {
                 TextEditor(text: $editedText)
                     .padding()
                     .border(Color.blue, width: 1)
+                    .frame(minHeight: 200)
                 
                 Button("Done") {
                     editModeActive = false
-                    viewModel.updateGptPrompt(id: gptPrompt.id, editedResponse: editedText)
+                    if gptPrompt.greWordId != nil {
+                        viewModel.updateGptPrompt(id: gptPrompt.id, editedResponse: editedText, greWordId: gptPrompt.greWordId!, onSuccess: onPromptUpdate)
+                    }
                 }
             }
             

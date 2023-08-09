@@ -30,15 +30,16 @@ struct GreWordPageView: View {
                     Text(greWord.spelling)
                     if let gptPrompts = viewModel.greWordQueryResult.data?.greWord?.gptPrompts {
                         List(gptPrompts, id:\.id) { gptPrompt in
-                            GptPromptView(gptPrompt: gptPrompt)
+                            GptPromptView(gptPrompt: gptPrompt, onPromptUpdate: {
+                                viewModel.fetchGreWord(greWordId: self.greWordId, forceReload: true)
+                            })
                         }
                     }
                 }
             }
         }
         .onAppear {
-            viewModel.greWordId = self.greWordId;
-            viewModel.fetchGreWord()
+            viewModel.fetchGreWord(greWordId: self.greWordId)
         }
     }
 }

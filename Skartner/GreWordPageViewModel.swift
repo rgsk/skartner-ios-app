@@ -11,8 +11,7 @@ import SkartnerAPI
 class GreWordPageViewModel: ObservableObject {
     @Published var greWordQueryResult = ApolloQuery<GreWordQuery>()
     
-    @Published var greWordId: String?
-   
+    
     private var subscriptionManager = ObservableObjectSubscriptionManager()
     func refresh() {
         self.objectWillChange.send()
@@ -22,15 +21,13 @@ class GreWordPageViewModel: ObservableObject {
         self.subscriptionManager.subscribeToChildObservable(self.greWordQueryResult, refresh)
     }
     
-    func fetchGreWord() {
-        if (greWordId != nil) {
-            let query = GreWordQuery(
-                where: GraphQLNullable(GreWordWhereUniqueInput(id:GraphQLNullable(stringLiteral: greWordId!)))
-            )
-            greWordQueryResult.execute(query, onSuccess: {
-                data in
-            })
-        }
+    func fetchGreWord(greWordId:String, forceReload:Bool?=false) {
+        let query = GreWordQuery(
+            where: GraphQLNullable(GreWordWhereUniqueInput(id:GraphQLNullable(stringLiteral: greWordId)))
+        )
+        greWordQueryResult.execute(query, forceReload: forceReload, onSuccess: {
+            data in
+        })
     }
     
 }

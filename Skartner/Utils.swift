@@ -50,14 +50,18 @@ class ApolloQuery<T: GraphQLQuery>: ObservableObject {
     func execute(
         client: ApolloClient = Network.shared.apollo,
         _ query: T,
+        forceReload:Bool?=false,
         onSuccess: ((_ data: T.Data) -> Void)? = nil,
         onError: ((_ errors: [GraphQLError]) -> Void)? = nil,
         onApolloError: ((_ apolloError: Error) -> Void)? = nil
     ) {
         loading = true
         cancellable?.cancel()
+        let cachePolicy: CachePolicy = forceReload! ?
+            .fetchIgnoringCacheData :
+            .returnCacheDataElseFetch
         
-        cancellable = client.fetch(query: query) { [weak self] result in
+        cancellable = client.fetch(query: query, cachePolicy: cachePolicy) { [weak self] result in
             switch result {
             case .success(let graphQLResult):
                 self?.data = graphQLResult.data
