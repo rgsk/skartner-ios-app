@@ -11,13 +11,15 @@ struct GreHistoryPageView: View {
     @StateObject var viewModel = GreHistoryPageViewModel()
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-        if let greWords = viewModel.greWordsQueryResult.data?.greWords {
-            List(greWords, id:\.id) { greWord in
-                Text(greWord.spelling)
+        VStack {
+            if let greWords = viewModel.greWordsQueryResult.data?.greWords {
+                List(greWords, id:\.id) { greWord in
+                    VStack {
+                        Text(greWord.spelling)
+                    }
+                }
             }
         }
-        
     }
 }
 

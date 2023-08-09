@@ -23,11 +23,12 @@ class GreHistoryPageViewModel: ObservableObject {
     
     func fetchGreWords() {
         let query = GreWordsQuery(
-            where: GraphQLNullable(GreWordWhereInput(
-                spelling: GraphQLNullable(StringFilter(startsWith: "c"))
-            )),
+//            where: GraphQLNullable(GreWordWhereInput(
+//                spelling: GraphQLNullable(StringFilter(startsWith: "c"))
+//            )),
+            where: nil,
             skip: 0,
-            take: 10,
+            take: 12,
             orderBy:[GreWordOrderByWithRelationInput(updatedAt: GraphQLNullable(SortOrder.desc))]
         )
         greWordsQueryResult.execute(query)
