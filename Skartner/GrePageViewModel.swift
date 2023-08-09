@@ -58,7 +58,19 @@ class GrePageViewModel: ObservableObject {
     func createGreWord() {
         if let promptResponse = sendSinglePromptQueryResult.data?.sendSinglePrompt.result {
             let mutation = CreateGreWordMutation(spelling: wordInput, promptInput: getPrompt(), promptResponse: promptResponse, userId: userId, greWordTags: [])
-            self.createGreWordMutationResult.perform(mutation)
+            self.createGreWordMutationResult.perform(mutation,onSuccess: {
+                data in
+                print("onSuccess")
+                print(data.createGreWord.spelling)
+            }, onError: {
+                errors in
+                print("onError")
+                print(errors[0].message ?? " ")
+            }, onApolloError: {
+                error in
+                print("onApolloError")
+                print(error.localizedDescription)
+            })
         }
         
     }

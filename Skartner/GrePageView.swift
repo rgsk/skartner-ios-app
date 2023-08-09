@@ -39,7 +39,7 @@ struct GrePageView: View {
             .padding()
             
             Spacer()
-            if viewModel.sendSinglePromptQueryResult.isLoading {
+            if viewModel.sendSinglePromptQueryResult.loading {
                 Text("Loading...")
             } else if let data = viewModel.sendSinglePromptQueryResult.data {
                 Text(data.sendSinglePrompt.result ?? " ")

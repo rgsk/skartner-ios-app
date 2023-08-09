@@ -43,7 +43,7 @@ class ApolloQuery<T: GraphQLQuery>: ObservableObject {
     @Published var data: T.Data?
     @Published var errors: [GraphQLError]?
     @Published var apolloError: Error?
-    @Published var isLoading: Bool = false
+    @Published var loading: Bool = false
     
     private var cancellable: Apollo.Cancellable?
     
@@ -54,7 +54,7 @@ class ApolloQuery<T: GraphQLQuery>: ObservableObject {
         onError: ((_ errors: [GraphQLError]) -> Void)? = nil,
         onApolloError: ((_ apolloError: Error) -> Void)? = nil
     ) {
-        isLoading = true
+        loading = true
         cancellable?.cancel()
         
         cancellable = client.fetch(query: query) { [weak self] result in
@@ -74,7 +74,7 @@ class ApolloQuery<T: GraphQLQuery>: ObservableObject {
                 self?.apolloError = apolloError
                 onApolloError?(apolloError)
             }
-            self?.isLoading = false
+            self?.loading = false
         }
     }
     
@@ -86,25 +86,39 @@ class ApolloQuery<T: GraphQLQuery>: ObservableObject {
 
 class ApolloMutation<T: GraphQLMutation>: ObservableObject {
     @Published var data: T.Data?
-    @Published var error: Error?
-    @Published var isPerforming: Bool = false
+    @Published var errors: [GraphQLError]?
+    @Published var apolloError: Error?
+    @Published var loading: Bool = false
     
     private var cancellable: Apollo.Cancellable?
     
-    func perform(client: ApolloClient = Network.shared.apollo, _ mutation: T) {
-        isPerforming = true
+    func perform(
+        client: ApolloClient = Network.shared.apollo,
+        _ mutation: T,
+        onSuccess: ((_ data: T.Data) -> Void)? = nil,
+        onError: ((_ errors: [GraphQLError]) -> Void)? = nil,
+        onApolloError: ((_ apolloError: Error) -> Void)? = nil
+    ) {
+        loading = true
         cancellable?.cancel()
         
         cancellable = client.perform(mutation: mutation) { [weak self] result in
             switch result {
             case .success(let graphQLResult):
                 self?.data = graphQLResult.data
-                self?.error = nil
+                self?.errors = graphQLResult.errors
+                if (graphQLResult.data != nil) {
+                    onSuccess?(graphQLResult.data!)
+                }
+                if (graphQLResult.errors != nil) {
+                    onError?(graphQLResult.errors!)
+                }
             case .failure(let apolloError):
                 self?.data = nil
-                self?.error = apolloError
+                self?.apolloError = apolloError
+                onApolloError?(apolloError)
             }
-            self?.isPerforming = false
+            self?.loading = false
         }
     }
     
