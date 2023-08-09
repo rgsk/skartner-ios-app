@@ -27,7 +27,9 @@ class GreWordPageViewModel: ObservableObject {
             let query = GreWordQuery(
                 where: GraphQLNullable(GreWordWhereUniqueInput(id:GraphQLNullable(stringLiteral: greWordId!)))
             )
-            greWordQueryResult.execute(query)
+            greWordQueryResult.execute(query, onSuccess: {
+                data in
+            })
         }
     }
     

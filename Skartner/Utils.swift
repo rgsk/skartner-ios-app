@@ -126,3 +126,22 @@ class ApolloMutation<T: GraphQLMutation>: ObservableObject {
         cancellable?.cancel()
     }
 }
+
+
+func convertToJSON<T>(_ object: T) -> String? {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .prettyPrinted
+    
+    if let encodableObject = object as? Encodable {
+        do {
+            let jsonData = try encoder.encode(encodableObject)
+            return String(data: jsonData, encoding: .utf8)
+        } catch {
+            print("Error encoding JSON: \(error)")
+        }
+    } else {
+        print("Object is not encodable.")
+    }
+    
+    return nil
+}
