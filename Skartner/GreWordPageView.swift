@@ -9,11 +9,13 @@ import SwiftUI
 
 struct GreWordPageView: View {
     @StateObject var viewModel = GreWordPageViewModel()
+  
     let greWordId: String
-
+    
     init(greWordId: String) {
         self.greWordId = greWordId;
     }
+
     var body: some View {
         VStack {
             if viewModel.greWordQueryResult.loading {
@@ -26,7 +28,11 @@ struct GreWordPageView: View {
                 VStack {
                     Text(greWord.id)
                     Text(greWord.spelling)
-                    Text(greWord.gptPrompts[0].response)
+                    if let gptPrompts = viewModel.greWordQueryResult.data?.greWord?.gptPrompts {
+                        List(gptPrompts, id:\.id) { gptPrompt in
+                            GptPromptView(gptPrompt: gptPrompt)
+                        }
+                    }
                 }
             }
         }

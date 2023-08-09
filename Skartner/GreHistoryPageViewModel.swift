@@ -28,7 +28,7 @@ class GreHistoryPageViewModel: ObservableObject {
 //            )),
             where: nil,
             skip: 0,
-            take: 12,
+            take: 120,
             orderBy:[GreWordOrderByWithRelationInput(updatedAt: GraphQLNullable(SortOrder.desc))]
         )
         greWordsQueryResult.execute(query)
