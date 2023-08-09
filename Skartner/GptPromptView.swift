@@ -10,6 +10,7 @@ import SkartnerAPI
 
 struct GptPromptView: View {
     let gptPrompt: GreWordQuery.Data.GreWord.GptPrompt
+    @StateObject var viewModel = GptPromptViewModel()
     @State var editModeActive = false
     @State var editedText = ""
     
@@ -22,6 +23,7 @@ struct GptPromptView: View {
                 
                 Button("Done") {
                     editModeActive = false
+                    viewModel.updateGptPrompt(id: gptPrompt.id, editedResponse: editedText)
                 }
             }
             
@@ -31,6 +33,14 @@ struct GptPromptView: View {
                     editedText = gptPrompt.response
                     editModeActive = true
                 }
+            if gptPrompt.editedResponse != nil {
+                Text(gptPrompt.editedResponse!)
+                    .onTapGesture(count: 2) {
+                        editedText = gptPrompt.editedResponse!
+                        editModeActive = true
+                    }
+            }
+            
         }
     }
 }
