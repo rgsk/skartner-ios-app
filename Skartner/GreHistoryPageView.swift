@@ -11,11 +11,16 @@ struct GreHistoryPageView: View {
     @StateObject var viewModel = GreHistoryPageViewModel()
 
     var body: some View {
-        VStack {
-            if let greWords = viewModel.greWordsQueryResult.data?.greWords {
-                List(greWords, id:\.id) { greWord in
-                    VStack {
-                        Text(greWord.spelling)
+        NavigationView {
+            VStack {
+                if let greWords = viewModel.greWordsQueryResult.data?.greWords {
+                 
+                    List(greWords, id:\.id) { greWord in
+                        NavigationLink(destination: GreWordPageView(greWordId: greWord.id)) {
+                            VStack {
+                                Text(greWord.spelling)
+                            }
+                        }
                     }
                 }
             }

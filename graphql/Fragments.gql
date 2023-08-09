@@ -1,0 +1,17 @@
+
+fragment GreWordFields on GreWord {
+  id
+  spelling
+  status
+  gptPrompts {
+    id
+    input
+    response
+    editedResponse
+    greWordId
+  }
+  greWordTags {
+    id
+    name
+  }
+}
