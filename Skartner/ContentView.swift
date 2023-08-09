@@ -1,43 +1,26 @@
-//
-//  ContentView.swift
-//  Skartner
-//
-//  Created by Rahul Gupta on 08/08/23.
-//
-
 import SwiftUI
-import SkartnerAPI
 
 struct ContentView: View {
+    let textResponses = [
+        "Response 1",
+        "Response 2",
+        "Response 3"
+    ]
+    
+    @State private var selectedTabIndex = 0
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!").onAppear {
-                Network.shared.apollo.fetch(query: HelloQuery()) { result in
-                       switch result {
-                       case .success(let graphQLResult):
-                           print("Success! Result: \(graphQLResult)")
-                           print("Result: \(graphQLResult.data?.hello.message ?? "hii")")
-                       case .failure(let error):
-                           print("Failure! Error: \(error)")
-                       }
-                   }
-                
-                
-                Network.shared.apollo.fetch(query: SendSinglePromptQuery(input: "list meaning and 3 easy example sentences for word - cool", skipCache: true, indexesReturned: [], resultIndexFromCache: 0)) { result in
-                       switch result {
-                       case .success(let graphQLResult):
-                           print("Success! Result: \(graphQLResult)")
-                           print("Result: \(graphQLResult.data?.sendSinglePrompt.result ?? "hii")")
-                       case .failure(let error):
-                           print("Failure! Error: \(error)")
-                       }
-                   }
+            Picker(selection: $selectedTabIndex, label: Text("dasdas")) {
+                ForEach(0..<textResponses.count, id: \.self) { index in
+                    Text(textResponses[index]).tag(index)
+                }
             }
+            .pickerStyle(SegmentedPickerStyle())
+            
+            Text(textResponses[selectedTabIndex])
+                .padding()
         }
-        .padding()
     }
 }
 

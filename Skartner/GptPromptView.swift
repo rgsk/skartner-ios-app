@@ -13,7 +13,8 @@ struct GptPromptView: View {
     @StateObject var viewModel = GptPromptViewModel()
     @State var editModeActive = false
     @State var editedText = ""
-    
+    @State private var selectedTabIndex = 0
+
     var body: some View {
         if editModeActive {
             VStack {
@@ -28,12 +29,28 @@ struct GptPromptView: View {
             }
             
         } else {
-            Text(gptPrompt.response)
-                .onTapGesture(count: 2) {
-                    editedText = gptPrompt.response
-                    editModeActive = true
-                }
+            
+         
+            
             if gptPrompt.editedResponse != nil {
+                Picker(selection: $selectedTabIndex, label: Text("")) {
+                    Text("Edited Response").tag(0)
+                    Text("Response").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                
+               
+                
+            }
+            
+            if gptPrompt.editedResponse == nil || selectedTabIndex == 1 {
+                Text(gptPrompt.response)
+                    .onTapGesture(count: 2) {
+                        editedText = gptPrompt.response
+                        editModeActive = true
+                    }
+               
+            } else {
                 Text(gptPrompt.editedResponse!)
                     .onTapGesture(count: 2) {
                         editedText = gptPrompt.editedResponse!
