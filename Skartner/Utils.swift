@@ -41,12 +41,19 @@ class ObservableObjectSubscriptionManager: ObservableObject {
 
 class ApolloQuery<T: GraphQLQuery>: ObservableObject {
     @Published var data: T.Data?
-    @Published var error: Error?
+    @Published var errors: [GraphQLError]?
+    @Published var apolloError: Error?
     @Published var isLoading: Bool = false
     
     private var cancellable: Apollo.Cancellable?
     
-    func execute(client: ApolloClient = Network.shared.apollo, _ query: T) {
+    func execute(
+        client: ApolloClient = Network.shared.apollo,
+        _ query: T,
+        onSuccess: ((_ data: T.Data) -> Void)? = nil,
+        onError: ((_ errors: [GraphQLError]) -> Void)? = nil,
+        onApolloError: ((_ apolloError: Error) -> Void)? = nil
+    ) {
         isLoading = true
         cancellable?.cancel()
         
@@ -54,10 +61,18 @@ class ApolloQuery<T: GraphQLQuery>: ObservableObject {
             switch result {
             case .success(let graphQLResult):
                 self?.data = graphQLResult.data
-                self?.error = nil
+                self?.errors = graphQLResult.errors
+                if (graphQLResult.data != nil) {
+                    onSuccess?(graphQLResult.data!)
+                }
+                if (graphQLResult.errors != nil) {
+                    onError?(graphQLResult.errors!)
+                }
+                
             case .failure(let apolloError):
                 self?.data = nil
-                self?.error = apolloError
+                self?.apolloError = apolloError
+                onApolloError?(apolloError)
             }
             self?.isLoading = false
         }

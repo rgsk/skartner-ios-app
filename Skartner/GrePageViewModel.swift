@@ -40,7 +40,19 @@ class GrePageViewModel: ObservableObject {
             resultIndexFromCache: 0
         )
         
-        self.sendSinglePromptQueryResult.execute(query)
+        self.sendSinglePromptQueryResult.execute(query, onSuccess: {
+            data in
+            print("onSuccess")
+            print(data.sendSinglePrompt.result ?? " ")
+        }, onError: {
+            errors in
+            print("onError")
+            print(errors[0].message ?? " ")
+        }, onApolloError: {
+            error in
+            print("onApolloError")
+            print(error.localizedDescription)
+        })
     }
     
     func createGreWord() {
