@@ -27,6 +27,8 @@
 		D581FAA82A83D7500087AFE7 /* GptPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581FAA72A83D7500087AFE7 /* GptPromptView.swift */; };
 		D581FAAA2A83DB030087AFE7 /* GreWordPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581FAA92A83DB030087AFE7 /* GreWordPageView.swift */; };
 		D581FAAC2A83DB8B0087AFE7 /* GptPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581FAAB2A83DB8B0087AFE7 /* GptPromptViewModel.swift */; };
+		D581FAAE2A8526160087AFE7 /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581FAAD2A8526160087AFE7 /* PracticeView.swift */; };
+		D581FAB02A85265E0087AFE7 /* SampleWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581FAAF2A85265E0087AFE7 /* SampleWebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		D581FAA72A83D7500087AFE7 /* GptPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GptPromptView.swift; sourceTree = "<group>"; };
 		D581FAA92A83DB030087AFE7 /* GreWordPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreWordPageView.swift; sourceTree = "<group>"; };
 		D581FAAB2A83DB8B0087AFE7 /* GptPromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GptPromptViewModel.swift; sourceTree = "<group>"; };
+		D581FAAD2A8526160087AFE7 /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
+		D581FAAF2A85265E0087AFE7 /* SampleWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,8 @@
 				D54751532A82C7B100309CAF /* GrePageView.swift */,
 				D54751592A82D2FA00309CAF /* GrePageViewModel.swift */,
 				D547515D2A82EF5600309CAF /* Utils.swift */,
+				D581FAAD2A8526160087AFE7 /* PracticeView.swift */,
+				D581FAAF2A85265E0087AFE7 /* SampleWebView.swift */,
 			);
 			path = Skartner;
 			sourceTree = "<group>";
@@ -230,10 +236,12 @@
 				D54751602A82F55500309CAF /* GreHistoryPageView.swift in Sources */,
 				D54751622A82F56700309CAF /* GreHistoryPageViewModel.swift in Sources */,
 				D581FAA82A83D7500087AFE7 /* GptPromptView.swift in Sources */,
+				D581FAAE2A8526160087AFE7 /* PracticeView.swift in Sources */,
 				D54751372A82BD3700309CAF /* ContentView.swift in Sources */,
 				D54751352A82BD3700309CAF /* SkartnerApp.swift in Sources */,
 				D54751542A82C7B100309CAF /* GrePageView.swift in Sources */,
 				D54751502A82C05D00309CAF /* Network.swift in Sources */,
+				D581FAB02A85265E0087AFE7 /* SampleWebView.swift in Sources */,
 				D581FAAC2A83DB8B0087AFE7 /* GptPromptViewModel.swift in Sources */,
 				D581FAAA2A83DB030087AFE7 /* GreWordPageView.swift in Sources */,
 				D547515A2A82D2FA00309CAF /* GrePageViewModel.swift in Sources */,
