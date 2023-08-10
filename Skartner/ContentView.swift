@@ -1,25 +1,31 @@
 import SwiftUI
 
 struct ContentView: View {
-    let textResponses = [
-        "Response 1",
-        "Response 2",
-        "Response 3"
-    ]
-    
-    @State private var selectedTabIndex = 0
-
     var body: some View {
-        VStack {
-            Picker(selection: $selectedTabIndex, label: Text("dasdas")) {
-                ForEach(0..<textResponses.count, id: \.self) { index in
-                    Text(textResponses[index]).tag(index)
+        TabView {
+            // Tab 1
+            Text("Tab 1 Content")
+                .tabItem {
+                    Image(systemName: "1.circle")
+                    Text("Tab 1")
                 }
-            }
-            .pickerStyle(SegmentedPickerStyle())
+                .tag(0)
             
-            Text(textResponses[selectedTabIndex])
-                .padding()
+            // Tab 2
+            Text("Tab 2 Content")
+                .tabItem {
+                    Image(systemName: "2.circle")
+                    Text("Tab 2")
+                }
+                .tag(1)
+            
+            // Tab 3
+            Text("Tab 3 Content")
+                .tabItem {
+                    Image(systemName: "3.circle")
+                    Text("Tab 3")
+                }
+                .tag(2)
         }
     }
 }

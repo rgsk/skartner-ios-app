@@ -11,7 +11,7 @@ import SwiftUI
 struct SkartnerApp: App {
     var body: some Scene {
         WindowGroup {
-            SampleWebView()
+            HomeView()
         }
     }
 }
