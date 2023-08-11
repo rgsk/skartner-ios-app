@@ -26,7 +26,10 @@ class GreWordPageViewModel: ObservableObject {
             where: GraphQLNullable(
                 GreWordWhereUniqueInput(
                     spelling_userId: GraphQLNullable(
-                        GreWordSpellingUserIdCompoundUniqueInput(spelling: spelling, userId: userId)
+                        GreWordSpellingUserIdCompoundUniqueInput(
+                            spelling: spelling,
+                            userId: userId
+                        )
                     )
                 )
             )
