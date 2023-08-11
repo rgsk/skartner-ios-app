@@ -21,9 +21,15 @@ class GreWordPageViewModel: ObservableObject {
         self.subscriptionManager.subscribeToChildObservable(self.greWordQueryResult, refresh)
     }
     
-    func fetchGreWord(greWordId:String, forceReload:Bool?=false) {
+    func fetchGreWord(spelling:String, forceReload:Bool?=false) {
         let query = GreWordQuery(
-            where: GraphQLNullable(GreWordWhereUniqueInput(id:GraphQLNullable(stringLiteral: greWordId)))
+            where: GraphQLNullable(
+                GreWordWhereUniqueInput(
+                    spelling_userId: GraphQLNullable(
+                        GreWordSpellingUserIdCompoundUniqueInput(spelling: spelling, userId: userId)
+                    )
+                )
+            )
         )
         greWordQueryResult.execute(query, forceReload: forceReload, onSuccess: {
             data in

@@ -16,7 +16,7 @@ struct GreHistoryPageView: View {
                 if let greWords = viewModel.greWordsQueryResult.data?.greWords {
                  
                     List(greWords, id:\.id) { greWord in
-                        NavigationLink(destination: GreWordPageView(greWordId: greWord.id)) {
+                        NavigationLink(destination: GreWordPageWrapperView(spelling: greWord.spelling)) {
                             VStack {
                                 Text(greWord.spelling)
                             }

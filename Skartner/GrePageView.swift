@@ -21,6 +21,7 @@ struct GrePageView: View {
                 HStack {
                     TextField("Word", text: $viewModel.wordInput)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
                     
                     Button(action: {
                         viewModel.sendSinglePrompt()
@@ -37,7 +38,8 @@ struct GrePageView: View {
                 }
             }
             .padding()
-            
+            Spacer()
+            GreWordPageView(spelling: $viewModel.wordInput)
             Spacer()
             if viewModel.sendSinglePromptQueryResult.loading {
                 Text("Loading...")

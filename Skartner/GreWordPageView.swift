@@ -10,11 +10,8 @@ import SwiftUI
 struct GreWordPageView: View {
     @StateObject var viewModel = GreWordPageViewModel()
   
-    let greWordId: String
-    
-    init(greWordId: String) {
-        self.greWordId = greWordId;
-    }
+    @Binding var spelling: String
+   
 
     var body: some View {
         VStack {
@@ -31,7 +28,7 @@ struct GreWordPageView: View {
                     if let gptPrompts = viewModel.greWordQueryResult.data?.greWord?.gptPrompts {
                         List(gptPrompts, id:\.id) { gptPrompt in
                             GptPromptView(gptPrompt: gptPrompt, onPromptUpdate: {
-                                viewModel.fetchGreWord(greWordId: self.greWordId, forceReload: true)
+                                viewModel.fetchGreWord(spelling: self.spelling, forceReload: true)
                             })
                         }
                     }
@@ -39,13 +36,24 @@ struct GreWordPageView: View {
             }
         }
         .onAppear {
-            viewModel.fetchGreWord(greWordId: self.greWordId)
+            viewModel.fetchGreWord(spelling: self.spelling)
         }
+        .onChange(of: self.spelling) {
+            _ in
+            viewModel.fetchGreWord(spelling: self.spelling)
+        }
+    }
+}
+
+struct GreWordPageWrapperView: View {
+    @State var spelling = "Joker"
+    var body: some View {
+        GreWordPageView(spelling: $spelling)
     }
 }
 
 struct GreWordPageView_Previews: PreviewProvider {
     static var previews: some View {
-        GreWordPageView(greWordId: "3036263c-cbd5-4cd2-8dac-7acc04de93eb")
+        GreWordPageWrapperView()
     }
 }
