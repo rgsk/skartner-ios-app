@@ -5,19 +5,21 @@
 //  Created by Rahul Gupta on 11/08/23.
 //
 
+import SkartnerAPI
 import SwiftUI
 
 struct HomeView: View {
     var body: some View {
         TabView {
             // Tab 1
+
             GrePageView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                 }
                 .tag(0)
-            
+
             // Tab 2
             GreHistoryPageView()
                 .tabItem {
@@ -25,9 +27,8 @@ struct HomeView: View {
                     Text("History")
                 }
                 .tag(1)
-            
+
             // Tab 3
-            
         }
     }
 }

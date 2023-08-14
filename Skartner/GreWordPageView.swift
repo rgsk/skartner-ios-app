@@ -5,13 +5,22 @@
 //  Created by Rahul Gupta on 09/08/23.
 //
 
+import SkartnerAPI
 import SwiftUI
+
+let sortedGreWordStatuses = [
+    GreWordStatus.startedLearning,
+    GreWordStatus.stillLearning,
+    GreWordStatus.almostLearnt,
+    GreWordStatus.memoryMode,
+    GreWordStatus.mastered
+]
 
 struct GreWordPageView: View {
     @StateObject var viewModel = GreWordPageViewModel()
-  
+
     @Binding var spelling: String
-   
+    @State var selectedOption: GreWordStatus = .startedLearning
 
     var body: some View {
         VStack {
@@ -20,17 +29,37 @@ struct GreWordPageView: View {
                     Text("Loading...")
                 }
             }
-            
+
             if let greWord = viewModel.greWordQueryResult.data?.greWord {
                 VStack {
                     Text(greWord.id)
                     Text(greWord.spelling)
+
+                    Picker("Status", selection: $selectedOption) {
+                        ForEach(sortedGreWordStatuses, id: \.self) { option in
+                            Text(option.rawValue).tag(option)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+
                     if let gptPrompts = viewModel.greWordQueryResult.data?.greWord?.gptPrompts {
-                        List(gptPrompts, id:\.id) { gptPrompt in
+                        List(gptPrompts, id: \.id) { gptPrompt in
                             GptPromptView(gptPrompt: gptPrompt, onPromptUpdate: {
-                                viewModel.fetchGreWord(spelling: self.spelling, forceReload: true)
+                                viewModel.fetchGreWord(
+                                    spelling: self.spelling,
+                                    forceReload: true
+                                )
                             })
                         }
+                    }
+                }
+                .onAppear {
+                    selectedOption = greWord.status.value ?? GreWordStatus.startedLearning
+                }
+                .onChange(of: selectedOption) { newValue in
+//                    print(newValue.rawValue)
+                    if greWord.status != newValue {
+                        viewModel.updateGreWord(status: newValue)
                     }
                 }
             }
