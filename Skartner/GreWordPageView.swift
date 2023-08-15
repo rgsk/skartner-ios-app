@@ -42,6 +42,22 @@ struct GreWordPageView: View {
                     }
                     .pickerStyle(MenuPickerStyle())
 
+                    if greWord.greWordTags != nil && !greWord.greWordTags!.isEmpty {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(greWord.greWordTags ?? [], id: \.self) { greWordTag in
+                                    TagView(tag: greWordTag.name, onCrossClick: {
+                                        viewModel.updateGreWord(
+                                            status: greWord.status.value!,
+                                            greWordTags: (greWord.greWordTags ?? []).filter { $0 != greWordTag }
+                                        )
+                                    })
+                                }
+                            }
+                            .padding()
+                        }
+                    }
+
                     if let gptPrompts = viewModel.greWordQueryResult.data?.greWord?.gptPrompts {
                         List(gptPrompts, id: \.id) { gptPrompt in
                             GptPromptView(gptPrompt: gptPrompt, onPromptUpdate: {
@@ -59,7 +75,7 @@ struct GreWordPageView: View {
                 .onChange(of: selectedOption) { newValue in
 //                    print(newValue.rawValue)
                     if greWord.status != newValue {
-                        viewModel.updateGreWord(status: newValue)
+                        viewModel.updateGreWord(status: newValue, greWordTags: greWord.greWordTags ?? [])
                     }
                 }
             }

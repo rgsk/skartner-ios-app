@@ -40,11 +40,17 @@ class GreWordPageViewModel: ObservableObject {
         })
     }
 
-    func updateGreWord(status: GreWordStatus) {
+    func updateGreWord(status: GreWordStatus, greWordTags: [GreWordQuery.Data.GreWord.GreWordTag]) {
 //        print("updateGreWord called")
+        let tagsInput = greWordTags.map { greWordTag in
+            return GreWordTagWhereUniqueInput(name: GraphQLNullable(stringLiteral: greWordTag.name))
+        }
+                                              
         if let greWord = greWordQueryResult.data?.greWord {
             let mutation = UpdateGreWordMutation(
-                updateGreWordId: greWord.id, greWordTags: nil, status: GraphQLNullable(status)
+                updateGreWordId: greWord.id,
+                greWordTags: .some(tagsInput),
+                status: .some(.init(status))
             )
             self.updateGreWordMutationResult.perform(mutation, onSuccess: {
                 _ in
