@@ -13,9 +13,16 @@ struct GreHistoryPageView: View {
     var body: some View {
         NavigationView {
             VStack {
+                TextField("Search", text: $viewModel.queryInput)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+                    .onChange(of: viewModel.queryInput) {
+                        _ in
+
+                        viewModel.fetchGreWords()
+                    }
                 if let greWords = viewModel.greWordsQueryResult.data?.greWords {
-                 
-                    List(greWords, id:\.id) { greWord in
+                    List(greWords, id: \.id) { greWord in
                         NavigationLink(destination: GreWordPageWrapperView(spelling: greWord.spelling)) {
                             VStack {
                                 Text(greWord.spelling)

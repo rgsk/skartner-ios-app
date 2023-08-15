@@ -11,27 +11,30 @@ typealias SortOrder = SkartnerAPI.SortOrder
 
 class GreHistoryPageViewModel: ObservableObject {
     @Published var greWordsQueryResult = ApolloQuery<GreWordsQuery>()
+    @Published var queryInput = ""
     private var subscriptionManager = ObservableObjectSubscriptionManager()
     func refresh() {
         self.objectWillChange.send()
     }
-    
+
     init() {
-        self.subscriptionManager.subscribeToChildObservable(self.greWordsQueryResult, refresh)
-        fetchGreWords()
+        self.subscriptionManager.subscribeToChildObservable(self.greWordsQueryResult, self.refresh)
+        self.fetchGreWords()
     }
-    
+
     func fetchGreWords() {
         let query = GreWordsQuery(
-//            where: GraphQLNullable(GreWordWhereInput(
-//                spelling: GraphQLNullable(StringFilter(startsWith: "c"))
-//            )),
-            where: nil,
+            where: GraphQLNullable(GreWordWhereInput(
+                spelling: GraphQLNullable(StringFilter(
+                    startsWith: GraphQLNullable(
+                        stringLiteral: self.queryInput
+                    )
+                ))
+            )),
             skip: 0,
             take: 120,
-            orderBy:[GreWordOrderByWithRelationInput(updatedAt: GraphQLNullable(SortOrder.desc))]
+            orderBy: [GreWordOrderByWithRelationInput(updatedAt: GraphQLNullable(SortOrder.desc))]
         )
-        greWordsQueryResult.execute(query)
+        self.greWordsQueryResult.execute(query)
     }
-    
 }
