@@ -8,12 +8,12 @@
 import SkartnerAPI
 import SwiftUI
 
-let sortedGreWordStatuses = [
-    GreWordStatus.startedLearning,
-    GreWordStatus.stillLearning,
-    GreWordStatus.almostLearnt,
-    GreWordStatus.memoryMode,
-    GreWordStatus.mastered
+let sortedGreWordStatuses: [GreWordStatus] = [
+    .startedLearning,
+    .stillLearning,
+    .almostLearnt,
+    .memoryMode,
+    .mastered
 ]
 
 struct GreWordPageView: View {

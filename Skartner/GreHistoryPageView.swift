@@ -21,6 +21,13 @@ struct GreHistoryPageView: View {
 
                         viewModel.fetchGreWords()
                     }
+
+                Button(action: {
+                    viewModel.isFilterSheetPresented = true
+                }) {
+                    Text("Open Filters")
+                }
+
                 if let greWords = viewModel.greWordsQueryResult.data?.greWords {
                     List(greWords, id: \.id) { greWord in
                         NavigationLink(destination: GreWordPageWrapperView(spelling: greWord.spelling)) {
@@ -29,6 +36,23 @@ struct GreHistoryPageView: View {
                             }
                         }
                     }
+                }
+            }
+            .sheet(isPresented: $viewModel.isFilterSheetPresented) {
+                if let greWordTags = viewModel.greWordTagsQueryResult.data?.greWordTags {
+                    GreHistoryFiltersView(
+                        allStatuses: sortedGreWordStatuses,
+                        allTags: greWordTags.map {
+                            tag in
+                            tag.name
+                        },
+                        selectedStatuses: $viewModel.selectedStatuses,
+                        selectedTags: $viewModel.selectedTags,
+                        onClose: {
+                            viewModel.isFilterSheetPresented = false
+                            viewModel.fetchGreWords()
+                        }
+                    )
                 }
             }
         }

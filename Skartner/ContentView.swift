@@ -1,31 +1,60 @@
+import SkartnerAPI
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedOption = "Option 1"
-    private let options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"]
-    
+    @State private var isFilterSheetPresented = false
+    @State private var selectedStatuses: Set<GreWordStatus> = Set(GreWordStatus.allCases)
+
+    let sortedGreWordStatuses: [GreWordStatus] = [
+        .startedLearning,
+        .stillLearning,
+        .almostLearnt,
+        .memoryMode,
+        .mastered
+    ]
+
     var body: some View {
         VStack {
-            Text("Select an option:")
-                .font(.headline)
-            
-            Picker("Options", selection: $selectedOption) {
-                ForEach(options, id: \.self) { option in
-                    Text(option).tag(option)
-                }
+            Button(action: {
+                isFilterSheetPresented.toggle()
+            }) {
+                Text("Open Filters")
             }
-            .pickerStyle(MenuPickerStyle())
-            
-            Text("Selected Option: \(selectedOption)")
         }
-        .padding()
-        .onChange(of: selectedOption) { newValue in
-                    // This closure will be called whenever the selected option changes
-                    print("Selected option changed to: \(newValue)")
-                }
+        .sheet(isPresented: $isFilterSheetPresented) {
+            FiltersView(selectedStatuses: $selectedStatuses, sortedGreWordStatuses: sortedGreWordStatuses)
+        }
     }
 }
 
+struct FiltersView: View {
+    @Binding var selectedStatuses: Set<GreWordStatus>
+    let sortedGreWordStatuses: [GreWordStatus]
+
+    var body: some View {
+        NavigationView {
+            List(sortedGreWordStatuses, id: \.self) { status in
+                Toggle(isOn: Binding(
+                    get: { selectedStatuses.contains(status) },
+                    set: { newValue in
+                        if newValue {
+                            selectedStatuses.insert(status)
+                        } else {
+                            selectedStatuses.remove(status)
+                        }
+                    }
+                )) {
+                    Text(status.rawValue)
+                }
+            }
+            .navigationTitle("Filters")
+            .navigationBarItems(trailing: Button("Done") {
+                // Close the modal sheet
+                // You can perform any necessary actions here
+            })
+        }
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
