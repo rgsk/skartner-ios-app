@@ -12,26 +12,36 @@ class GreWordPageViewModel: ObservableObject {
     @Published var greWordQueryResult = ApolloQuery<GreWordQuery>()
     @Published var updateGreWordMutationResult = ApolloMutation<UpdateGreWordMutation>()
 
+    @Published var greWordTagsQueryResult = ApolloQuery<GreWordTagsQuery>()
+
     private var subscriptionManager = ObservableObjectSubscriptionManager()
     func refresh() {
         self.objectWillChange.send()
     }
 
-    init() {
+    func subscribeToChildObservables() {
         self.subscriptionManager.subscribeToChildObservable(self.greWordQueryResult, self.refresh)
         self.subscriptionManager.subscribeToChildObservable(self.updateGreWordMutationResult, self.refresh)
+        self.subscriptionManager.subscribeToChildObservable(self.greWordTagsQueryResult, self.refresh)
+    }
+
+    init() {
+        self.subscribeToChildObservables()
+        self.onMount()
+    }
+
+    func onMount() {
+        self.fetchGreWordTags()
     }
 
     func fetchGreWord(spelling: String, forceReload: Bool? = false) {
         let query = GreWordQuery(
             where: GraphQLNullable(
                 GreWordWhereUniqueInput(
-                    spelling_userId: GraphQLNullable(
-                        GreWordSpellingUserIdCompoundUniqueInput(
-                            spelling: spelling,
-                            userId: userId
-                        )
-                    )
+                    spelling_userId: .some(.init(
+                        spelling: spelling,
+                        userId: userId
+                    ))
                 )
             )
         )
@@ -40,22 +50,30 @@ class GreWordPageViewModel: ObservableObject {
         })
     }
 
-    func updateGreWord(status: GreWordStatus, greWordTags: [GreWordQuery.Data.GreWord.GreWordTag]) {
+    func updateGreWord(status: GreWordStatus? = nil, greWordTagNames: [String]? = nil) {
 //        print("updateGreWord called")
-        let tagsInput = greWordTags.map { greWordTag in
-            return GreWordTagWhereUniqueInput(name: GraphQLNullable(stringLiteral: greWordTag.name))
-        }
-                                              
+
         if let greWord = greWordQueryResult.data?.greWord {
             let mutation = UpdateGreWordMutation(
                 updateGreWordId: greWord.id,
-                greWordTags: .some(tagsInput),
-                status: .some(.init(status))
+                greWordTags: greWordTagNames != nil ?
+                    .some(greWordTagNames!.map { name in
+                        GreWordTagWhereUniqueInput(name: GraphQLNullable(stringLiteral: name))
+                    })
+                    : nil,
+                status: status != nil ? .some(.init(status!)) : nil
             )
             self.updateGreWordMutationResult.perform(mutation, onSuccess: {
                 _ in
                 self.fetchGreWord(spelling: greWord.spelling, forceReload: true)
             })
         }
+    }
+
+    func fetchGreWordTags() {
+        let query = GreWordTagsQuery(where: nil)
+        self.greWordTagsQueryResult.execute(query, onSuccess: {
+            _ in
+        })
     }
 }

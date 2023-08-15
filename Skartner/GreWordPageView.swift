@@ -20,7 +20,8 @@ struct GreWordPageView: View {
     @StateObject var viewModel = GreWordPageViewModel()
 
     @Binding var spelling: String
-    @State var selectedOption: GreWordStatus = .startedLearning
+    @State var selectedStatus: GreWordStatus = .startedLearning
+    @State var selectedTag = ""
 
     var body: some View {
         VStack {
@@ -35,12 +36,29 @@ struct GreWordPageView: View {
                     Text(greWord.id)
                     Text(greWord.spelling)
 
-                    Picker("Status", selection: $selectedOption) {
+                    Picker("Status", selection: $selectedStatus) {
                         ForEach(sortedGreWordStatuses, id: \.self) { option in
                             Text(option.rawValue).tag(option)
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
+                    if let allGreWordTags = viewModel.greWordTagsQueryResult.data?.greWordTags {
+                        let tagsUsed = (greWord.greWordTags ?? []).map { $0.name }
+                        let notIncluded = allGreWordTags.filter { !tagsUsed.contains($0.name) }
+                        Picker("Tag", selection: $selectedTag) {
+                            Text("").tag("")
+                            ForEach(notIncluded, id: \.self) { tag in
+                                Text(tag.name).tag(tag.name)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .onChange(of: selectedTag) { _ in
+                            viewModel.updateGreWord(
+                                greWordTagNames: (greWord.greWordTags?.map { $0.name } ?? []) + [selectedTag]
+                            )
+                            selectedTag = ""
+                        }
+                    }
 
                     if greWord.greWordTags != nil && !greWord.greWordTags!.isEmpty {
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -48,8 +66,12 @@ struct GreWordPageView: View {
                                 ForEach(greWord.greWordTags ?? [], id: \.self) { greWordTag in
                                     TagView(tag: greWordTag.name, onCrossClick: {
                                         viewModel.updateGreWord(
-                                            status: greWord.status.value!,
-                                            greWordTags: (greWord.greWordTags ?? []).filter { $0 != greWordTag }
+                                            greWordTagNames:
+                                            (greWord.greWordTags?.map { $0.name }
+                                                ??
+                                                []
+                                            )
+                                            .filter { $0 != greWordTag.name }
                                         )
                                     })
                                 }
@@ -70,12 +92,12 @@ struct GreWordPageView: View {
                     }
                 }
                 .onAppear {
-                    selectedOption = greWord.status.value ?? GreWordStatus.startedLearning
+                    selectedStatus = greWord.status.value ?? GreWordStatus.startedLearning
                 }
-                .onChange(of: selectedOption) { newValue in
+                .onChange(of: selectedStatus) { newValue in
 //                    print(newValue.rawValue)
                     if greWord.status != newValue {
-                        viewModel.updateGreWord(status: newValue, greWordTags: greWord.greWordTags ?? [])
+                        viewModel.updateGreWord(status: newValue)
                     }
                 }
             }
