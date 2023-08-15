@@ -20,6 +20,7 @@ struct GreWordPageView: View {
     @StateObject var viewModel = GreWordPageViewModel()
 
     @Binding var spelling: String
+    @Binding var refreshDep: Bool
     @State var selectedStatus: GreWordStatus = .startedLearning
     @State var selectedTag = ""
 
@@ -109,13 +110,22 @@ struct GreWordPageView: View {
             _ in
             viewModel.fetchGreWord(spelling: self.spelling)
         }
+        .onChange(of: self.refreshDep) {
+            _ in
+
+            // we fetch after 2 second to ensure entry exists in db
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                viewModel.fetchGreWord(spelling: self.spelling, forceReload: true)
+            }
+        }
     }
 }
 
 struct GreWordPageWrapperView: View {
     @State var spelling = "Joker"
+    @State var refreshDep = false
     var body: some View {
-        GreWordPageView(spelling: $spelling)
+        GreWordPageView(spelling: $spelling, refreshDep: $refreshDep)
     }
 }
 

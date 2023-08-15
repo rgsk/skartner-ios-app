@@ -5,12 +5,10 @@
 //  Created by Rahul Gupta on 09/08/23.
 //
 
-import SwiftUI
 import SkartnerAPI
-
+import SwiftUI
 
 struct GrePageView: View {
-    
     @StateObject var viewModel = GrePageViewModel()
     
     var body: some View {
@@ -34,19 +32,21 @@ struct GrePageView: View {
                 Button(action: {
                     viewModel.createGreWord()
                 }) {
-                   Text("Save")
+                    Text("Save")
                 }
             }
             .padding()
             Spacer()
-            GreWordPageView(spelling: $viewModel.wordInput)
+            GreWordPageView(
+                spelling: $viewModel.wordInput,
+                refreshDep: $viewModel.sendSinglePromptQueryResult.loading
+            )
             Spacer()
             if viewModel.sendSinglePromptQueryResult.loading {
                 Text("Loading...")
             } else if let data = viewModel.sendSinglePromptQueryResult.data {
                 Text(data.sendSinglePrompt.result ?? " ")
             }
-            
         }
     }
 }
