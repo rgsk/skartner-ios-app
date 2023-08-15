@@ -7,7 +7,6 @@
 
 import Foundation
 import SkartnerAPI
-typealias SortOrder = SkartnerAPI.SortOrder
 
 class GreHistoryPageViewModel: ObservableObject {
     @Published var greWordsQueryResult = ApolloQuery<GreWordsQuery>()
@@ -24,16 +23,16 @@ class GreHistoryPageViewModel: ObservableObject {
 
     func fetchGreWords() {
         let query = GreWordsQuery(
-            where: GraphQLNullable(GreWordWhereInput(
-                spelling: GraphQLNullable(StringFilter(
-                    startsWith: GraphQLNullable(
-                        stringLiteral: self.queryInput
+            where: .some(.init(
+                spelling: .some(.init(
+                    startsWith: .some(
+                        self.queryInput
                     )
                 ))
             )),
             skip: 0,
             take: 120,
-            orderBy: [GreWordOrderByWithRelationInput(updatedAt: GraphQLNullable(SortOrder.desc))]
+            orderBy: [.init(updatedAt: .some(.case(.desc)))]
         )
         self.greWordsQueryResult.execute(query)
     }

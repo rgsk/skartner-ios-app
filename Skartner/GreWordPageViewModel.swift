@@ -36,14 +36,12 @@ class GreWordPageViewModel: ObservableObject {
 
     func fetchGreWord(spelling: String, forceReload: Bool? = false) {
         let query = GreWordQuery(
-            where: GraphQLNullable(
-                GreWordWhereUniqueInput(
-                    spelling_userId: .some(.init(
-                        spelling: spelling,
-                        userId: userId
-                    ))
-                )
-            )
+            where: .some(.init(
+                spelling_userId: .some(.init(
+                    spelling: spelling,
+                    userId: userId
+                ))
+            ))
         )
         self.greWordQueryResult.execute(query, forceReload: forceReload, onSuccess: {
             _ in
@@ -58,7 +56,7 @@ class GreWordPageViewModel: ObservableObject {
                 updateGreWordId: greWord.id,
                 greWordTags: greWordTagNames != nil ?
                     .some(greWordTagNames!.map { name in
-                        GreWordTagWhereUniqueInput(name: GraphQLNullable(stringLiteral: name))
+                        .init(name: .some(name))
                     })
                     : nil,
                 status: status != nil ? .some(.init(status!)) : nil

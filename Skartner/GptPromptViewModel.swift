@@ -22,7 +22,7 @@ class GptPromptViewModel: ObservableObject {
     
     func updateGptPrompt(id: String, editedResponse: String, greWordId: String, onSuccess: @escaping () -> Void) {
         let mutation = UpdateGptPromptMutation(
-            id: id, editedResponse:GraphQLNullable(stringLiteral: editedResponse)
+            id: id, editedResponse: .some(editedResponse)
         )
         self.updateGptPromptMutationResult.perform(mutation,onSuccess: {
             _ in
