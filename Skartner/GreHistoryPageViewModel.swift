@@ -8,6 +8,8 @@
 import Foundation
 import SkartnerAPI
 
+let perPage = 10
+
 class GreHistoryPageViewModel: ObservableObject {
     @Published var greWordsQueryResult = ApolloQuery<GreWordsQuery>()
     @Published var greWordTagsQueryResult = ApolloQuery<GreWordTagsQuery>()
@@ -16,6 +18,9 @@ class GreHistoryPageViewModel: ObservableObject {
     @Published var isFilterSheetPresented = false
     @Published var selectedStatuses: Set<GreWordStatus> = Set(GreWordStatus.allCases)
     @Published var selectedTags: Set<String> = Set()
+    @Published private var page = 1
+    
+    @Published var allGreWords: [GreWordsQuery.Data.GreWord] = []
 
     private var subscriptionManager = ObservableObjectSubscriptionManager()
     func refresh() {
@@ -50,11 +55,24 @@ class GreHistoryPageViewModel: ObservableObject {
                     : .none,
                 status: .some(.init(in: .some(self.selectedStatuses.map { GraphQLEnum($0) })))
             )),
-            skip: 0,
-            take: 120,
+            skip: .some((page - 1) * perPage),
+            take: .some(page * perPage),
             orderBy: [.init(updatedAt: .some(.case(.desc)))]
         )
-        self.greWordsQueryResult.execute(query)
+        self.greWordsQueryResult.execute(query, onSuccess: {
+            data in
+            
+            self.allGreWords.append(contentsOf: data.greWords)
+        })
+    }
+    
+    func loadMoreWords() {
+        if let count = greWordsQueryResult.data?.greWordsCount {
+            if page * perPage < count {
+                page += 1
+                fetchGreWords()
+            }
+        }
     }
 
     func fetchGreWordTags() {

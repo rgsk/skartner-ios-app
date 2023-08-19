@@ -28,16 +28,20 @@ struct GreHistoryPageView: View {
                     Text("Open Filters")
                 }
 
-                if let greWords = viewModel.greWordsQueryResult.data?.greWords {
-                    List(greWords, id: \.id) { greWord in
-                        NavigationLink(destination: GreWordPageWrapperView(spelling: greWord.spelling)) {
-                            VStack {
-                                Text(greWord.spelling)
+                List(viewModel.allGreWords, id: \.id) { greWord in
+                    NavigationLink(destination: GreWordPageWrapperView(spelling: greWord.spelling)) {
+                        VStack {
+                            Text(greWord.spelling)
+                        }
+                        .onAppear {
+                            if greWord == viewModel.allGreWords.last {
+                                viewModel.loadMoreWords()
                             }
                         }
                     }
                 }
             }
+
             .sheet(isPresented: $viewModel.isFilterSheetPresented) {
                 if let greWordTags = viewModel.greWordTagsQueryResult.data?.greWordTags {
                     GreHistoryFiltersView(
