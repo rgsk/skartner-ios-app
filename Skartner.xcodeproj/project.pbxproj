@@ -31,6 +31,7 @@
 		D581FAAC2A83DB8B0087AFE7 /* GptPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581FAAB2A83DB8B0087AFE7 /* GptPromptViewModel.swift */; };
 		D581FAAE2A8526160087AFE7 /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581FAAD2A8526160087AFE7 /* PracticeView.swift */; };
 		D581FAB02A85265E0087AFE7 /* SampleWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581FAAF2A85265E0087AFE7 /* SampleWebView.swift */; };
+		D5A2C6F22A914488001DD87F /* SpeechToTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A2C6F12A914488001DD87F /* SpeechToTextView.swift */; };
 		D5E54B042A8B5F8000AEDD76 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E54B032A8B5F8000AEDD76 /* TagView.swift */; };
 		D5E54B082A8BABC100AEDD76 /* GreHistoryFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E54B072A8BABC100AEDD76 /* GreHistoryFiltersView.swift */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,8 @@
 		D581FAAB2A83DB8B0087AFE7 /* GptPromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GptPromptViewModel.swift; sourceTree = "<group>"; };
 		D581FAAD2A8526160087AFE7 /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
 		D581FAAF2A85265E0087AFE7 /* SampleWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleWebView.swift; sourceTree = "<group>"; };
+		D5A2C6F12A914488001DD87F /* SpeechToTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechToTextView.swift; sourceTree = "<group>"; };
+		D5A2C6F32A914895001DD87F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D5E54B032A8B5F8000AEDD76 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		D5E54B072A8BABC100AEDD76 /* GreHistoryFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreHistoryFiltersView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +105,7 @@
 		D54751332A82BD3700309CAF /* Skartner */ = {
 			isa = PBXGroup;
 			children = (
+				D5A2C6F32A914895001DD87F /* Info.plist */,
 				D54751342A82BD3700309CAF /* SkartnerApp.swift */,
 				D54751362A82BD3700309CAF /* ContentView.swift */,
 				D54751382A82BD3800309CAF /* Assets.xcassets */,
@@ -109,6 +113,7 @@
 				D547513B2A82BD3800309CAF /* Preview Content */,
 				D547514F2A82C05D00309CAF /* Network.swift */,
 				D581FAA72A83D7500087AFE7 /* GptPromptView.swift */,
+				D5A2C6F12A914488001DD87F /* SpeechToTextView.swift */,
 				D581FAAB2A83DB8B0087AFE7 /* GptPromptViewModel.swift */,
 				D581FAA92A83DB030087AFE7 /* GreWordPageView.swift */,
 				D581FAA52A83C7200087AFE7 /* GreWordPageViewModel.swift */,
@@ -249,6 +254,7 @@
 				D54751602A82F55500309CAF /* GreHistoryPageView.swift in Sources */,
 				D54751622A82F56700309CAF /* GreHistoryPageViewModel.swift in Sources */,
 				D580E0F42A85AB5C0020452B /* HomeView.swift in Sources */,
+				D5A2C6F22A914488001DD87F /* SpeechToTextView.swift in Sources */,
 				D581FAA82A83D7500087AFE7 /* GptPromptView.swift in Sources */,
 				D581FAAE2A8526160087AFE7 /* PracticeView.swift in Sources */,
 				D54751372A82BD3700309CAF /* ContentView.swift in Sources */,
@@ -390,6 +396,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Skartner/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to convert your voice into text.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need to recognise speech, to conversate with the chatbot";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -428,6 +437,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Skartner/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to convert your voice into text.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need to recognise speech, to conversate with the chatbot";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
